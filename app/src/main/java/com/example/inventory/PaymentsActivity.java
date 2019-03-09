@@ -71,10 +71,10 @@ public class PaymentsActivity extends AppCompatActivity {
 
 
     public void sampleData() {
-        Transactions trans1 = new Transactions("Shaurya -> Taco Bell", "Hungry", "4.20", "Food", parseDate("2019-05-17"));
-        Transactions trans2 = new Transactions("Paul -> Weaver", "Help", "6.69", "Food", parseDate("2019-03-06"));
-        Transactions trans3 = new Transactions("Abhinav -> Moffitt", "Rent", "2800", "Food", parseDate("2019-05-08"));
-        Transactions trans4 = new Transactions("Kanyes -> MLAB", "Plz", "50", "Food", parseDate("2019-04-17"));
+        Transactions trans1 = new Transactions("Shaurya -> Taco Bell", "Hungry", "4.20", "Food", parseDate("2019-03-09"));
+        Transactions trans2 = new Transactions("Paul -> Weaver", "Help", "6.69", "Food", parseDate("2019-03-07"));
+        Transactions trans3 = new Transactions("Abhinav -> Moffitt", "Rent", "2800", "Food", parseDate("2019-03-07"));
+        Transactions trans4 = new Transactions("Kanyes -> MLAB", "Plz", "50", "Food", parseDate("2019-03-08"));
         transactions.add(trans1);
         transactions.add(trans2);
         transactions.add(trans3);

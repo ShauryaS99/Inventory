@@ -42,7 +42,7 @@ public class Transactions {
 
     public String getDate() {
         String pattern = "MM/dd/yyyy HH:mm:ss";
-        DateFormat df = new SimpleDateFormat(pattern);;
+        DateFormat df = new SimpleDateFormat(pattern);
         return df.format(date);
     }
 
