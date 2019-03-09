@@ -19,8 +19,6 @@ public class PaymentsActivity extends AppCompatActivity {
     private static final String TAG = "Payments";
     private ArrayList<Transactions> transactions;
 
-    RecyclerView recyclerView = findViewById(R.id.paymentRecyclerView);
-    private PaymentsAdapter adapter;
 
 //    /** SQL-related variables. */
 //    private DatabaseHelper.DatabaseOpenHelper dbHelper;
@@ -33,11 +31,14 @@ public class PaymentsActivity extends AppCompatActivity {
 
         transactions = new ArrayList<>();
 
+        RecyclerView recyclerView = findViewById(R.id.paymentRecyclerView);
+
         sampleData();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PaymentsAdapter(null, getApplicationContext());
+        PaymentsAdapter adapter = new PaymentsAdapter(transactions, getApplicationContext());
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
 //        dbHelper = new DatabaseHelper.DatabaseOpenHelper(this);
 //        sql_db = dbHelper.getReadableDatabase();
