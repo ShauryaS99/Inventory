@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".AddTransaction">
 
+
+
     <EditText
         android:id="@+id/nameET"
         android:layout_width="0dp"
@@ -55,7 +57,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Cost"
+        android:hint="$XX.XX"
         android:inputType="numberDecimal"
         android:maxLength="30"
         android:textCursorDrawable="@null"
@@ -69,7 +71,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Date"
+        android:hint="mm/dd/yyyy"
         android:inputType="date"
         android:maxLength="30"
         android:textCursorDrawable="@null"
@@ -89,6 +91,16 @@
         android:textCursorDrawable="@null"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateET" />
+
+    <Button
+        android:id="@+id/addbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="32dp"
+        android:text="Buy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelET" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -12,8 +12,10 @@ public class Transactions {
     private String cost;
     private String label;
     private Date date;
+    private long id;
 
-    public Transactions(String loc_name, String loc_desc, String loc_cost, String loc_label, Date loc_date) {
+    public Transactions(long loc_id, String loc_name, String loc_desc, String loc_cost, String loc_label, Date loc_date) {
+        id = loc_id;
         name = loc_name;
         desc = loc_desc;
         cost = loc_cost;
@@ -21,6 +23,9 @@ public class Transactions {
         date = loc_date;
     }
 
+    public long getID() {
+        return id;
+    }
     public String getName() {
         return name;
     }

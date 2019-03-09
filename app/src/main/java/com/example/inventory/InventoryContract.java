@@ -11,6 +11,7 @@ public class InventoryContract {
         public static final String COLUMN_TRANS_LABEL = "Label";
         public static final String COLUMN_TRANS_COST = "Cost";
         public static final String COLUMN_TRANS_DATE = "Date";
+        public static final String COLUMN_TRANS_LONG = "Date_long";
 
 
     }
