@@ -1,8 +1,11 @@
 package com.example.inventory;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.Toolbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +36,10 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
     /** SQL-related variables. */
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
+    private SearchView _searchView;
+    private PaymentsAdapter adapter;
+
+
 
 //    /** SQL-related variables. */
 //    private DatabaseHelper.DatabaseOpenHelper dbHelper;
@@ -42,19 +54,18 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
         addTrans = findViewById(R.id.addtransaction);
         addTrans.setOnClickListener(this);
         RecyclerView recyclerView = findViewById(R.id.paymentRecyclerView);
-
-        sampleData();
-
-        PaymentsAdapter adapter = new PaymentsAdapter(transactions, getApplicationContext());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
 
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getReadableDatabase();
 
+
+        sampleData();
         populateTransactions();
+
+        adapter = new PaymentsAdapter(transactions, getApplicationContext());
+        recyclerView.setAdapter(adapter);
 
 
     }
@@ -71,7 +82,7 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
         };
 
         String sortOrder =
-                InventoryContract.InventoryEntry.COLUMN_TRANS_LONG+ " DESC";
+                InventoryContract.InventoryEntry.COLUMN_TRANS_LONG + " DESC";
 
 
         Cursor cursor = db.query(
@@ -140,5 +151,63 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
                 Intent i = new Intent(this, AddTransaction.class);
                 startActivity(i);
         }
+    }
+
+    /** Creates all the menu options for the toolbar (the search button). */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.activity_payments, menu);
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        _searchView = (SearchView) searchItem.getActionView();
+
+        _searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        _searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+
+                adapter.getFilter().filter(text);
+                return false;
+            }
+        });
+
+        // Will set the search query to the most recent search, if present.
+        _searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String prevFilter = retrievePrevQuery(getApplicationContext());
+                _searchView.setQuery(prevFilter, false);
+            }
+        });
+
+        ImageView closeButton = _searchView.findViewById(R.id.search_close_btn);
+
+        // Set on click listener
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _searchView.setQuery(null, false);
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("prev", null);
+                editor.apply();
+            }
+        });
+
+        return true;
+    }
+
+
+    /** Retrieves the most recent query from SharedPreference. */
+    public static String retrievePrevQuery(Context c) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
+        String prevFilter = sharedPref.getString("prev", null);
+        return prevFilter;
     }
 }
